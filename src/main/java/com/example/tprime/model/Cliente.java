@@ -24,7 +24,7 @@ public class Cliente extends AbstractEntity<Long> {
     private String cpf;
 
     @Column(nullable = false)
-    private LocalDate dataNas;
+    private LocalDate dataNascimento;
 
     @Column(nullable = false)
     private String email;
@@ -45,7 +45,7 @@ public class Cliente extends AbstractEntity<Long> {
     //toString para exibir as informações do cliente
     @Override
     public String toString() {
-        return "\nCliente id= " + id + "\nnome= " + nome + "\ncpf= " + cpf + "\ndataNas= " + dataNas + "\nemail= " + email
+        return "\nCliente id= " + id + "\nnome= " + nome + "\ncpf= " + cpf + "\ndataNas= " + dataNascimento + "\nemail= " + email
                 + "\ntelefone= " + telefone + "\nendereco= " + endereco + "\ndivida= " + divida + "\n";
     }
     
