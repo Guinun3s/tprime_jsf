@@ -9,7 +9,7 @@ and open the template in the editor.
     xmlns:ui="http://xmlns.jcp.org/jsf/facelets" >
 <ui:composition template="/WEB-INF/template/Layout.xhtml">
 
-    <ui:define name="titulo">Consulta de Clientes</ui:define>
+    <ui:define name="titulo">Consulta de Produtos</ui:define>
 
     <ui:define name="corpo">
         <h:form>
@@ -18,59 +18,39 @@ and open the template in the editor.
             <p:toolbar>
                 <p:toolbarGroup>
                     <p:button icon="pi pi-plus" value="Novo" 
-                         outcome="cadastrocliente" />
+                         outcome="cadastroproduto" />
                 </p:toolbarGroup>
             </p:toolbar>
 
-            <p:dataTable var="cliente" value="#{consultaClienteBean.clientes}" 
+            <p:dataTable var="produto" value="#{consultaProdutoBean.produtos}" 
                         reflow="true" paginator="true" rows="10" 
                         paginatorPosition="bottom"
                         rowsPerPageTemplate="5,10,{ShowAll|'All'}" >
                 
                 <p:column headerText="Nome">
-                    <h:outputText value="#{cliente.nome}" />
+                    <h:outputText value="#{produto.nome}" />
                 </p:column>
                 
                 <p:column headerText="CPF">
-                    <h:outputText value="#{cliente.cpf}" />
-                </p:column>
-                
-                <p:column headerText="Data de Nascimento">
-                    <h:outputText value="#{cliente.dataNascimento}" />
-                </p:column>
-                
-                <p:column headerText="Email">
-                    <h:outputText value="#{cliente.email}" />
-                </p:column>
-                
-                <p:column headerText="Telefone">
-                    <h:outputText value="#{cliente.telefone}" />
-                </p:column>
-                
-                <p:column headerText="Endereço">
-                    <h:outputText value="#{cliente.endereco}" />
-                </p:column>
-                
-                <p:column headerText="Dívida">
-                    <h:outputText value="R$ #{cliente.divida}" />
+                    <h:outputText value="#{produto.valor}" />
                 </p:column>
                 
                 <p:column headerText="Ações">
-                    <p:button title="Alterar" icon="pi pi-pencil" outcome="cadastrocliente">
-                        <f:param name="id" value="#{cliente.id}" />
+                    <p:button title="Alterar" icon="pi pi-pencil" outcome="cadastroproduto">
+                        <f:param name="id" value="#{produto.id}" />
                     </p:button>
                     <p:commandButton title="Excluir" icon="pi pi-trash"
                         process="@this" oncomplete="PF('deleteDialog').show()">
-                        <f:setPropertyActionListener value="#{cliente}"
-                            target="#{consultaClienteBean.clienteSelecionado}" />
+                        <f:setPropertyActionListener value="#{produto}"
+                            target="#{consultaProdutoBean.produtoSelecionado}" />
                     </p:commandButton>
                 </p:column>
 
             </p:dataTable>
 
             <p:confirmDialog widgetVar="deleteDialog" showEffect="fade" width="350"
-                message="Exclusão de Cliente?"  header="Confirmação" severity="warn">
-                <p:commandButton value="Sim" icon="pi pi-check" actionListener="#{consultaClienteBean.excluir()}"
+                message="Exclusão de Produto?"  header="Confirmação" severity="warn">
+                <p:commandButton value="Sim" icon="pi pi-check" actionListener="#{consultaProdutoBean.excluir()}"
                     process="@this" update="@form" oncomplete="PF('deleteDialog').hide()" />
                 <p:commandButton value="Não" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
                     process="@this" update="@form" onclick="PF('deleteDialog').hide()" />

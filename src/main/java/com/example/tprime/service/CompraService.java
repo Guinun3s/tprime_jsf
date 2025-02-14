@@ -30,8 +30,8 @@ public class CompraService {
         compraRepository.deleteById(id);
     }
 
-    public Optional<Compra> buscarPorId(Long id) {
-        return compraRepository.findById(id);
+    public Compra buscarPorId(Long id) {
+        return compraRepository.findById(id).get();
     }
 
     public List<Compra> buscarTodos() {

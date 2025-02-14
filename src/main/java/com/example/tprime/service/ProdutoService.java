@@ -28,8 +28,8 @@ public class ProdutoService {
         repository.deleteById(id);
     }
 
-    public Optional<Produto> buscarPorId(Long id) {
-        return repository.findById(id);
+    public Produto buscarPorId(Long id) {
+        return repository.findById(id).get();
     }
 
     public List<Produto> buscarTodos() {
