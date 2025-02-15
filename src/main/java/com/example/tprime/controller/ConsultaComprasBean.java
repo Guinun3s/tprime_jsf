@@ -10,9 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import com.example.tprime.model.Cliente;
 import com.example.tprime.model.Compra;
-import com.example.tprime.service.ClienteService;
 import com.example.tprime.service.CompraService;
 
 import lombok.Getter;
@@ -20,35 +18,31 @@ import lombok.Setter;
 
 @Component
 @Scope("view")
-public class ConsultaClienteBean {
+public class ConsultaComprasBean {
     @Getter
-    private List<Cliente> clientes;
-
-    @Getter
-    private List<Compra> todasCompras;
+    private List<Compra> compras;
 
     @Getter @Setter
-    private Cliente clienteSelecionado;
-
-    @Autowired
-    private ClienteService clienteService;
+    private Compra compraSelecionado;
 
     @Autowired
     private CompraService compraService;
 
+    @Getter @Setter
+    private Long clienteId;
+
     @PostConstruct
     public void init(){
-        clientes = clienteService.buscarTodos();
-        todasCompras = compraService.buscarTodos();
+        compras = compraService.buscarComprasPorCliente(clienteId);
     }
 
     public void excluir(){
-        FacesContext context = FacesContext.getCurrentInstance();
+         FacesContext context = FacesContext.getCurrentInstance();
         //remove a nd do banco de dados
-        clienteService.excluir(clienteSelecionado.getId());
-        context.addMessage(null, new FacesMessage("Exclusão", "Cliente excluído com sucesso."));
-        //consultar();
-        clientes = clienteService.buscarTodos();
+        compraService.excluir(compraSelecionado.getId());
+            context.addMessage(null, new FacesMessage("Exclusão", "Compra excluído com sucesso."));
+            //consultar();
+            compras = compraService.buscarTodos();
     }
     
 }

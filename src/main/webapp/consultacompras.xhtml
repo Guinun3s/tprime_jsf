@@ -1,34 +1,36 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://xmlns.jcp.org/jsf/core"
     xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:p="http://primefaces.org/ui"
-    xmlns:ui="http://xmlns.jcp.org/jsf/facelets" >
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
 <ui:composition template="/WEB-INF/template/Layout.xhtml">
 
     <ui:define name="titulo">Consulta de Compras</ui:define>
 
     <ui:define name="corpo">
         <h:form>
+            <f:metadata>
+                <f:viewParam name="clienteId" value="#{consultaComprasBean.clienteId}" />
+                <f:viewAction action="#{consultaComprasBean.init()}" />
+            </f:metadata>
+
             <p:growl showDetail="true"/>
 
             <p:toolbar>
                 <p:toolbarGroup>
                     <p:button icon="pi pi-plus" value="Novo" 
-                         outcome="cadastrocompra" />
+                         outcome="cadastrocompra">
+                        <f:param name="clienteId" value="#{consultaComprasBean.clienteId}" />
+                    </p:button>
                 </p:toolbarGroup>
             </p:toolbar>
 
-            <p:dataTable var="compra" value="#{consultaCompraBean.compras}" 
+            <p:dataTable var="compra" value="#{consultaComprasBean.compras}" 
                         reflow="true" paginator="true" rows="10" 
                         paginatorPosition="bottom"
                         rowsPerPageTemplate="5,10,{ShowAll|'All'}" >
                 
-                <p:column headerText="Nome">
-                    <h:outputText value="#{compra.situacao}" />
+                <p:column headerText="Situação">
+                    <h:outputText value="#{compra.situacao ? 'Pago' : 'Pendente'}" />
                 </p:column>
                 
                 <p:column headerText="Data da compra">
@@ -36,12 +38,20 @@ and open the template in the editor.
                 </p:column>
                 
                 <p:column headerText="Valor">
-                    <h:outputText value="#{compra.valor}" />
+                    <h:outputText value="R$ #{compra.valor}" />
+                </p:column>
+                
+                <p:column headerText="Produtos">
+                    <ui:repeat value="#{compra.produtos}" var="produto">
+                        <h:outputText value="#{produto.nome}" />
+                        <br />
+                    </ui:repeat>
                 </p:column>
                 
                 <p:column headerText="Ações">
                     <p:button title="Alterar" icon="pi pi-pencil" outcome="cadastrocompra">
                         <f:param name="id" value="#{compra.id}" />
+                        <f:param name="clienteId" value="#{consultaComprasBean.clienteId}" />
                     </p:button>
                 </p:column>
 

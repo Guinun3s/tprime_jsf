@@ -10,10 +10,15 @@ INSERT INTO produto (nome, valor) VALUES
 ('Ferrari Black', 880.00),
 ('Wisky 99', 2500.00);
 
-INSERT INTO compra (data_compra, situacao, valor, id_cliente_fk, id_produto_fk) VALUES
-('2021-01-01', false, 80.00, 1, 1),
-('2021-02-02', false, 230.00, 2, 2),
-('2021-03-03', false, 1080.00, 3, 3);
+INSERT INTO compra (data_compra, situacao, valor, id_cliente_fk) VALUES
+('2021-01-01', false, 80.00, 1),
+('2021-02-02', false, 230.00, 2),
+('2021-03-03', false, 1080.00, 3);
+
+INSERT INTO compra_produto (compra_id, produto_id) VALUES
+(1, 1),
+(2, 2),
+(3, 3);
 
 INSERT INTO pagamento (data_pagamento, forma_pagamento, valor, id_pagamento_fk) VALUES
 ('2021-01-01', 'Cartão', 50.00, 1),

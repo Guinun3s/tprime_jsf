@@ -22,7 +22,7 @@ and open the template in the editor.
                 </p:toolbarGroup>
             </p:toolbar>
 
-            <p:dataTable var="cliente" value="#{consultaClienteBean.clientes}" 
+            <p:dataTable var="cliente" value="#{consultaClientesBean.clientes}" 
                         reflow="true" paginator="true" rows="10" 
                         paginatorPosition="bottom"
                         rowsPerPageTemplate="5,10,{ShowAll|'All'}" >
@@ -62,15 +62,21 @@ and open the template in the editor.
                     <p:commandButton title="Excluir" icon="pi pi-trash"
                         process="@this" oncomplete="PF('deleteDialog').show()">
                         <f:setPropertyActionListener value="#{cliente}"
-                            target="#{consultaClienteBean.clienteSelecionado}" />
+                            target="#{consultaClientesBean.clienteSelecionado}" />
                     </p:commandButton>
+                </p:column>
+
+                <p:column headerText="Compras">
+                    <p:button title="Ver Compras" icon="pi pi-shopping-cart" outcome="consultacompras">
+                        <f:param name="clienteId" value="#{cliente.id}" />
+                    </p:button>
                 </p:column>
 
             </p:dataTable>
 
             <p:confirmDialog widgetVar="deleteDialog" showEffect="fade" width="350"
                 message="Exclusão de Cliente?"  header="Confirmação" severity="warn">
-                <p:commandButton value="Sim" icon="pi pi-check" actionListener="#{consultaClienteBean.excluir()}"
+                <p:commandButton value="Sim" icon="pi pi-check" actionListener="#{consultaClientesBean.excluir()}"
                     process="@this" update="@form" oncomplete="PF('deleteDialog').hide()" />
                 <p:commandButton value="Não" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
                     process="@this" update="@form" onclick="PF('deleteDialog').hide()" />

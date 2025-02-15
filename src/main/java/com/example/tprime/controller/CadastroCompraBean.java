@@ -1,5 +1,7 @@
 package com.example.tprime.controller;
 
+import java.util.List;
+
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -9,7 +11,9 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.example.tprime.model.*;
+import com.example.tprime.service.ClienteService;
 import com.example.tprime.service.CompraService;
+import com.example.tprime.service.ProdutoService;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -22,21 +26,33 @@ public class CadastroCompraBean {
     @Autowired
     private CompraService compraService;
 
+    @Autowired
+    private ClienteService clienteService;
+
+    @Autowired
+    private ProdutoService produtoService;
+
+    @Getter@Setter
+    private Long clienteId;
+
+    @Getter
+    private List<Cliente> clientes;
+    @Getter
+    private List<Produto> produtos;
+
     @PostConstruct
     public void init() {
-        compra = new Compra();
+        clientes = clienteService.buscarTodos();
+        produtos = produtoService.buscarTodos();
     }
-
-    /*public void consultar() {
-        todosCompras = compraService.buscarTodos();
-        //System.out.println("entrou no post cronstructor");
-    }*/
 
     public void salvar() {
         FacesContext context = FacesContext.getCurrentInstance();
+        Cliente cliente = clienteService.buscarPorId(clienteId);
+        compra.setCliente(cliente);
         compraService.salvar(compra);
         //Prepara para cadastrar um novo lancamento
-        compra = new Compra();
+        //compra = new Compra();
 
         FacesMessage mensagem = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cadastro efetuado.",
                 "Compra cadastrado com sucesso.");
@@ -45,9 +61,9 @@ public class CadastroCompraBean {
     }
 
     public void prepararCadastro() {
-        compra = compraService.buscarPorId(compra.getId());
-        
+            compra = compraService.buscarPorId(compra.getId());
+            Cliente cliente = clienteService.buscarPorId(clienteId);
+            compra.setCliente(cliente);
+        }
     }
 
-
-}

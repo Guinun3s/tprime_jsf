@@ -38,4 +38,8 @@ public class CompraService {
         return compraRepository.findAll();
     }
 
+    public List<Compra> buscarComprasPorCliente(Long clienteId) {
+        return compraRepository.findByClienteId(clienteId);
+    }
+
 }

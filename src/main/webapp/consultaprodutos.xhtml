@@ -22,7 +22,7 @@ and open the template in the editor.
                 </p:toolbarGroup>
             </p:toolbar>
 
-            <p:dataTable var="produto" value="#{consultaProdutoBean.produtos}" 
+            <p:dataTable var="produto" value="#{consultaProdutosBean.produtos}" 
                         reflow="true" paginator="true" rows="10" 
                         paginatorPosition="bottom"
                         rowsPerPageTemplate="5,10,{ShowAll|'All'}" >
@@ -42,7 +42,7 @@ and open the template in the editor.
                     <p:commandButton title="Excluir" icon="pi pi-trash"
                         process="@this" oncomplete="PF('deleteDialog').show()">
                         <f:setPropertyActionListener value="#{produto}"
-                            target="#{consultaProdutoBean.produtoSelecionado}" />
+                            target="#{consultaProdutosBean.produtoSelecionado}" />
                     </p:commandButton>
                 </p:column>
 
@@ -50,7 +50,7 @@ and open the template in the editor.
 
             <p:confirmDialog widgetVar="deleteDialog" showEffect="fade" width="350"
                 message="Exclusão de Produto?"  header="Confirmação" severity="warn">
-                <p:commandButton value="Sim" icon="pi pi-check" actionListener="#{consultaProdutoBean.excluir()}"
+                <p:commandButton value="Sim" icon="pi pi-check" actionListener="#{consultaProdutosBean.excluir()}"
                     process="@this" update="@form" oncomplete="PF('deleteDialog').hide()" />
                 <p:commandButton value="Não" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
                     process="@this" update="@form" onclick="PF('deleteDialog').hide()" />

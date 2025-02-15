@@ -1,80 +1,73 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:h="http://xmlns.jcp.org/jsf/html"
-	xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+    xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui">
 
 <ui:composition template="WEB-INF/template/Layout.xhtml">
 
-	<f:metadata>
-		<f:viewParam name="id" value="#{cadastroCompraBean.compra.id}" />
-		<f:viewAction action="#{cadastroCompraBean.prepararCadastro()}" if="#{param.id ne null}" />
-	</f:metadata>
+    <f:metadata>
+        <f:viewParam name="id" value="#{cadastroCompraBean.compra.id}" />
+        <f:viewParam name="clienteId" value="#{cadastroCompraBean.clienteId}" />
+        <f:viewAction action="#{cadastroCompraBean.prepararCadastro()}" if="#{param.id ne null}" />
+    </f:metadata>
 
-	<ui:define name="titulo">
-		Cadastro de Funcionário
-	</ui:define>
+    <ui:define name="titulo">
+        Cadastro de Compra
+    </ui:define>
 
-	<ui:define name="corpo">
+    <ui:define name="corpo">
 
-		<h:form id="form">
-			<style>
-				button.ui-button {
-					margin-right: .5rem;
-				}
-			</style>
+        <h:form id="form">
+            <style>
+                button.ui-button {
+                    margin-right: .5rem;
+                }
+            </style>
 
-			<!-- <p:messages id="messages" showDetail="true" closable="true">
-				<p:autoUpdate/>
-			</p:messages> -->
+            <p:growl id="growl" showDetail="false" />
 
-			<p:growl id="growl" showDetail="false" />
+            <div class="card">
+                <p:row>
+                    <h2>Dados Gerais</h2>
+                </p:row>
+                <p:panelGrid columns="4" columnClasses="ui-grid-col-1,ui-grid-col-5,ui-grid-col-1,ui-grid-col-5"
+                    layout="grid" styleClass="ui-panelgrid-blank ui-fluid"
+                    style="border:0px none; background-color:transparent;">
 
-			<div class="card">
-				<p:row>
-					<h2>Dados Gerais</h2>
-				</p:row>
-				<p:panelGrid columns="4" columnClasses="ui-grid-col-1,ui-grid-col-5,ui-grid-col-1,ui-grid-col-5"
-					layout="grid" styleClass="ui-panelgrid-blank ui-fluid"
-					style="border:0px none; background-color:transparent;">
+                    <p:outputLabel value="Produtos" />
+                    <p:selectCheckboxMenu value="#{cadastroCompraBean.compra.produtos}" label="Selecione os Produtos">
+                        <f:selectItems value="#{cadastroCompraBean.produtos}" var="produto"
+                            itemLabel="#{produto.nome}" itemValue="#{produto}" />
+                    </p:selectCheckboxMenu>
 
-					<p:outputLabel value="Nome" />
-					<p:inputText value="#{cadastroCompraBean.compra.nome}" required="true"
-						requiredMessage="O campo NOME não pode ficar em branco" />
+                    <p:outputLabel value="Situação" />
+                    <p:selectOneMenu value="#{cadastroCompraBean.compra.situacao}">
+                        <f:selectItem itemLabel="Selecione" noSelectionOption="true" itemDisabled="true"/>
+                        <f:selectItem itemLabel="Pago" itemValue="true" />
+                        <f:selectItem itemLabel="Pendente" itemValue="false" />
+                    </p:selectOneMenu>
+                        
+                    <p:outputLabel value="Data da Compra" />
+                    <p:calendar pattern="dd/MM/yyyy" value="#{cadastroCompraBean.compra.dataCompra}" required="true"
+                        requiredMessage="O campo DATA DA COMPRA não pode ficar em branco"/>
 
-					<p:outputLabel value="Cpf" />
-					<p:inputText value="#{cadastroCompraBean.compra.cpf}" required="true"
-						requiredMessage="O campo CPF não pode ficar em branco" />
+                    <p:outputLabel value="Valor" />
+                    <p:inputText value="#{cadastroCompraBean.compra.valor}" required="true"
+                        requiredMessage="O campo VALOR não pode ficar em branco" />
+    
+                </p:panelGrid>
 
-					<p:outputLabel value="Data de Nascimento" />
-					<p:calendar pattern="dd/MM/yyyy" value="#{cadastroCompraBean.compra.dataNascimento}" required="true"
-						requiredMessage="O campo DATA DE NASCIMENTO não pode ficar em branco"/>
+            </div>
 
-					<p:outputLabel value="Email" />
-					<p:inputText value="#{cadastroCompraBean.compra.email}" required="true"
-						requiredMessage="O campo EMAIL não pode ficar em branco" />
-	
-					<p:outputLabel value="Telefone" />
-					<p:inputText value="#{cadastroCompraBean.compra.telefone}" required="true"
-						requiredMessage="O campo TELEFONE não pode ficar em branco" />
+            <p:commandButton value="Salvar" actionListener="#{cadastroCompraBean.salvar()}"
+                icon="pi pi-save" process="@all" update="@form, growl" />
 
-					<p:outputLabel value="Endereco" />
-					<p:inputText value="#{cadastroCompraBean.compra.endereco}" required="true"
-						requiredMessage="O campo ENDEREÇO não pode ficar em branco" />
+            <p:button title="Retornar" value="Retornar" icon="pi pi-undo" outcome="consultacompras">
+                <f:param name="clienteId" value="#{cadastroCompraBean.clienteId}" />
+            </p:button>
 
-					
-				</p:panelGrid>
+        </h:form>
 
-			</div>
-
-
-			
-			<p:commandButton value="Salvar  " actionListener="#{cadastroCompraBean.salvar()}"
-						icon="pi pi-save"  process="@all" update="@form" />
-						
-			<p:button title="Cancelar" value="Cancelar" icon="pi pi-undo" outcome="consultacompra" />
-
-		</h:form>
-
-	</ui:define>
+    </ui:define>
 </ui:composition>
 </html>

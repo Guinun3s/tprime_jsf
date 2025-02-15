@@ -20,7 +20,7 @@ import lombok.Setter;
 
 @Component
 @Scope("view")
-public class ConsultaProdutoBean {
+public class ConsultaProdutosBean {
     @Getter
     private List<Produto> produtos;
 

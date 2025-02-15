@@ -1,6 +1,7 @@
 package com.example.tprime.model;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import javax.persistence.*;
 import lombok.*;
@@ -29,9 +30,13 @@ public class Compra extends AbstractEntity<Long> {
     @JoinColumn(name = "id_cliente_fk")
     private Cliente cliente;
 
-    @ManyToOne
-    @JoinColumn(name = "id_produto_fk")
-    private Produto produto;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+        name = "compra_produto",
+        joinColumns = @JoinColumn(name = "compra_id"),
+        inverseJoinColumns = @JoinColumn(name = "produto_id")
+    )
+    private List<Produto> produtos;
 
     @OneToOne(mappedBy = "compra", cascade = CascadeType.ALL)
     private Pagamento pagamento;

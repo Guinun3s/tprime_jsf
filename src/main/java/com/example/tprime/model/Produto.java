@@ -1,6 +1,5 @@
 package com.example.tprime.model;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.*;
@@ -22,8 +21,8 @@ public class Produto extends AbstractEntity<Long> {
     private float valor;
 
     //Relacionamento
-    @OneToMany(mappedBy = "produto", cascade = CascadeType.ALL)
-    private List<Compra> compras = new ArrayList<>();
+    @ManyToMany(mappedBy = "produtos")
+    private List<Compra> compras;
 
     //toString para exibir as informações do produto
     @Override
