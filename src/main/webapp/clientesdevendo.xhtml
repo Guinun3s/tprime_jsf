@@ -25,7 +25,9 @@
                 </p:column>
 
                 <p:column headerText="Valor da Dívida">
-                    <h:outputText value="R$ #{cliente.divida}" />
+                    <h:outputText value="#{cliente.divida}">
+                        <f:convertNumber type="currency" currencySymbol="R$" locale="pt_BR" />
+                    </h:outputText>
                 </p:column>
 
                 <p:column headerText="Ações">

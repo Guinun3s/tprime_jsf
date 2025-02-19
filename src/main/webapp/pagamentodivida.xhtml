@@ -25,7 +25,9 @@
                     <h:outputText value="#{pagamentoDividaBean.cliente.nome}" />
 
                     <p:outputLabel value="Valor Total da Dívida" />
-                    <h:outputText value="R$ #{pagamentoDividaBean.valorTotalDivida}" />
+                    <h:outputText value="#{pagamentoDividaBean.valorTotalDivida}">
+                        <f:convertNumber type="currency" currencySymbol="R$" locale="pt_BR" />
+                    </h:outputText>
 
                     <p:outputLabel value="Valor a Pagar" />
                     <p:inputText value="#{pagamentoDividaBean.valorPagamento}" required="true"

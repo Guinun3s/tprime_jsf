@@ -31,8 +31,10 @@ and open the template in the editor.
                     <h:outputText value="#{produto.nome}" />
                 </p:column>
                 
-                <p:column headerText="CPF">
-                    <h:outputText value="#{produto.valor}" />
+                <p:column headerText="Valor">
+                    <h:outputText value="#{produto.valor}">
+                        <f:convertNumber type="currency" currencySymbol="R$" locale="pt_BR" />
+                    </h:outputText>
                 </p:column>
                 
                 <p:column headerText="Ações">

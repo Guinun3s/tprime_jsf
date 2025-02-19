@@ -18,9 +18,6 @@ public class ClienteService {
     @Autowired
     private IClienteRepository clienteRepository;
 
-    @Autowired
-    private ICompraRepository compraRepository;
-
     //Método utilizado para o adicionar a dívida do cliente caso ele não pague a sua compra
     public void adicionarDivida(Long clienteId, Double valor) {
         Cliente cliente = clienteRepository.findById(clienteId).orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
@@ -46,5 +43,9 @@ public class ClienteService {
 
     public List<Cliente> buscarTodos(){
         return clienteRepository.findAll();
+    }
+
+    public List<Cliente> buscarClientesComDivida() {
+        return clienteRepository.findByDividaGreaterThan(0.0);
     }
 }

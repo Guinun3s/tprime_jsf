@@ -40,7 +40,9 @@
                 </p:column>
                 
                 <p:column headerText="Valor">
-                    <h:outputText value="R$ #{compra.valor}" />
+                    <h:outputText value="#{compra.valor}">
+                        <f:convertNumber type="currency" currencySymbol="R$" locale="pt_BR" />
+                    </h:outputText>
                 </p:column>
                 
                 <p:column headerText="Produtos">
