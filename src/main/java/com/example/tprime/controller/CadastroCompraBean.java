@@ -37,6 +37,7 @@ public class CadastroCompraBean {
 
     @Getter
     private List<Cliente> clientes;
+
     @Getter
     private List<Produto> produtos;
 
@@ -61,9 +62,15 @@ public class CadastroCompraBean {
     }
 
     public void prepararCadastro() {
+        if (compra == null) {
+            compra = new Compra();
+        } else if (compra.getId() != null) {
             compra = compraService.buscarPorId(compra.getId());
+        }
+        if (clienteId != null) {
             Cliente cliente = clienteService.buscarPorId(clienteId);
             compra.setCliente(cliente);
         }
     }
+}
 

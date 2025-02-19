@@ -39,13 +39,6 @@
                         <f:selectItems value="#{cadastroCompraBean.produtos}" var="produto"
                             itemLabel="#{produto.nome}" itemValue="#{produto}" />
                     </p:selectCheckboxMenu>
-
-                    <p:outputLabel value="Situação" />
-                    <p:selectOneMenu value="#{cadastroCompraBean.compra.situacao}">
-                        <f:selectItem itemLabel="Selecione" noSelectionOption="true" itemDisabled="true"/>
-                        <f:selectItem itemLabel="Pago" itemValue="true" />
-                        <f:selectItem itemLabel="Pendente" itemValue="false" />
-                    </p:selectOneMenu>
                         
                     <p:outputLabel value="Data da Compra" />
                     <p:calendar pattern="dd/MM/yyyy" value="#{cadastroCompraBean.compra.dataCompra}" required="true"
@@ -60,7 +53,7 @@
             </div>
 
             <p:commandButton value="Salvar" actionListener="#{cadastroCompraBean.salvar()}"
-                icon="pi pi-save" process="@all" update="@form, growl" />
+                icon="pi pi-save" process="@all" update="@form" />
 
             <p:button title="Retornar" value="Retornar" icon="pi pi-undo" outcome="consultacompras">
                 <f:param name="clienteId" value="#{cadastroCompraBean.clienteId}" />

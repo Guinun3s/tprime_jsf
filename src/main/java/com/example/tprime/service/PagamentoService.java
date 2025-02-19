@@ -21,21 +21,17 @@ public class PagamentoService {
     private IClienteRepository clienteRepository;
 
     @Autowired
-    private ICompraRepository compraRepository;
-
-    @Autowired
     private IPagamentoRepository repository;
 
     //Método utilizado para o cliente realizar o pagamento da compra realizada ou pagar sua dívida 
-    public void pagarCompra(Long clienteId, Long compraId) {
+    public void pagarDivida(Long clienteId, Double valorPagamento) {
         Cliente cliente = clienteRepository.findById(clienteId).orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
-        Compra compra = compraRepository.findById(compraId).orElseThrow(() -> new RuntimeException("Compra não encontrada"));
 
-        if (!compra.isSituacao()) { 
-            compra.setSituacao(true); 
-            compraRepository.save(compra); 
-            cliente.setDivida(cliente.getDivida() - compra.getValor()); 
-            clienteRepository.save(cliente); 
+        if (valorPagamento > 0 && valorPagamento <= cliente.getDivida()) {
+            cliente.setDivida(cliente.getDivida() - valorPagamento);
+            clienteRepository.save(cliente);
+        } else {
+            throw new IllegalArgumentException("Valor de pagamento inválido");
         }
     }
 

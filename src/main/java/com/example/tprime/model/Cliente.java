@@ -36,7 +36,7 @@ public class Cliente extends AbstractEntity<Long> {
     private String endereco;
 
     @Column(nullable = false)
-    private float divida;
+    private Double divida = 0.0;
 
     //Relacionamento
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)

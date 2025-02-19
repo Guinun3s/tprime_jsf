@@ -22,15 +22,10 @@ public class ClienteService {
     private ICompraRepository compraRepository;
 
     //Método utilizado para o adicionar a dívida do cliente caso ele não pague a sua compra
-    public void adicionarDivida(Long clienteId, Long compraId) {
+    public void adicionarDivida(Long clienteId, Double valor) {
         Cliente cliente = clienteRepository.findById(clienteId).orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
-        Compra compra = compraRepository.findById(compraId).orElseThrow(() -> new RuntimeException("Compra não encontrada"));
-
-        if (!compra.isSituacao()) {
-            // Adicionar o valor da compra à dívida do cliente
-            cliente.setDivida(cliente.getDivida() + compra.getValor());
-            clienteRepository.save(cliente);
-        }
+        cliente.setDivida(cliente.getDivida() + valor);
+        clienteRepository.save(cliente);
     }
 
     public void salvar(Cliente cliente){

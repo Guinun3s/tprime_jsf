@@ -39,25 +39,26 @@ and open the template in the editor.
                     <h:outputText value="#{cliente.dataNascimento}" />
                 </p:column>
                 
-                <p:column headerText="Email">
-                    <h:outputText value="#{cliente.email}" />
-                </p:column>
-                
-                <p:column headerText="Telefone">
-                    <h:outputText value="#{cliente.telefone}" />
-                </p:column>
-                
                 <p:column headerText="Endereço">
                     <h:outputText value="#{cliente.endereco}" />
                 </p:column>
-                
-                <p:column headerText="Dívida">
-                    <h:outputText value="R$ #{cliente.divida}" />
+
+                <p:column headerText="Contatos do Cliente">
+                    <p:commandButton icon="pi pi-eye" update="@form"
+                        oncomplete="PF('detalheClienteDialog').show()"
+                        styleClass="edit-button rounded-button ui-button-success" process="@this">
+                        <f:setPropertyActionListener value="#{cliente}"
+                            target="#{consultaClientesBean.clienteSelecionado}" />
+                        <p:resetInput target="@form" />
+                    </p:commandButton>
                 </p:column>
-                
+
                 <p:column headerText="Ações">
                     <p:button title="Alterar" icon="pi pi-pencil" outcome="cadastrocliente">
                         <f:param name="id" value="#{cliente.id}" />
+                    </p:button>
+                    <p:button title="Ver Compras" icon="pi pi-shopping-cart" outcome="consultacompras">
+                        <f:param name="clienteId" value="#{cliente.id}" />
                     </p:button>
                     <p:commandButton title="Excluir" icon="pi pi-trash"
                         process="@this" oncomplete="PF('deleteDialog').show()">
@@ -66,13 +67,26 @@ and open the template in the editor.
                     </p:commandButton>
                 </p:column>
 
-                <p:column headerText="Compras">
-                    <p:button title="Ver Compras" icon="pi pi-shopping-cart" outcome="consultacompras">
-                        <f:param name="clienteId" value="#{cliente.id}" />
-                    </p:button>
-                </p:column>
-
             </p:dataTable>
+
+            <p:dialog header="Contatos do cliente" showEffect="fade" modal="true" widgetVar="detalheClienteDialog"
+				responsive="true">
+				<p:outputPanel id="detalhe-cliente-content" class="ui-fluid">
+					<p:panelGrid columns="2" columnClasses="ui-grid-col-15,ui-grid-col-20">
+                        <p:outputLabel value="Telefone:" />
+                        <h:outputText value="#{consultaClientesBean.clienteSelecionado.telefone}" />
+
+                        <p:outputLabel value="Email:" />
+                        <h:outputText value="#{consultaClientesBean.clienteSelecionado.email}" />
+                    </p:panelGrid>
+                </p:outputPanel>
+
+                <f:facet name="footer">
+                    <p:commandButton value="Fechar" icon="pi pi-close" onclick="PF('detalheClienteDialog').hide()"
+                        class="ui-button-secondary" type="button" />
+                </f:facet>
+            </p:dialog> 
+            
 
             <p:confirmDialog widgetVar="deleteDialog" showEffect="fade" width="350"
                 message="Exclusão de Cliente?"  header="Confirmação" severity="warn">

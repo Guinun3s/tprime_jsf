@@ -16,14 +16,10 @@ public class Compra extends AbstractEntity<Long> {
     private Long id;
     
     @Column(nullable = false)
-    private float valor;
+    private Double valor;
 
     @Column(nullable = false)
     private LocalDate dataCompra;
-
-    //Atributo para verificar se a compra foi paga ou não
-    @Column(nullable = false)
-    private boolean situacao;
 
     //Relacionamentos
     @ManyToOne
@@ -44,7 +40,7 @@ public class Compra extends AbstractEntity<Long> {
     //toString para exibir as informações da compra
     @Override
     public String toString() {
-        return "\nCompra id= " + id + "\nvalor= " + valor + "\ndataCompra= " + dataCompra + "\nsituação= " + situacao + "\n";
+        return "\nCompra id= " + id + "\nvalor= " + valor + "\ndataCompra= " + dataCompra + "\n";
     }
 
 }
