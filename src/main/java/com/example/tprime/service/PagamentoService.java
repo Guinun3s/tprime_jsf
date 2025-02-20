@@ -46,6 +46,10 @@ public class PagamentoService {
         }
     }
 
+    public List<Pagamento> buscarPagamentosPorCliente(Long clienteId) {
+        return pagamentoRepository.findByClienteId(clienteId);
+    }
+
     public void salvar(Pagamento pagamento) {
         pagamentoRepository.save(pagamento);
     }

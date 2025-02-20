@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:f="http://xmlns.jcp.org/jsf/core"
+    xmlns:h="http://xmlns.jcp.org/jsf/html" xmlns:p="http://primefaces.org/ui"
+    xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+<ui:composition template="/WEB-INF/template/Layout.xhtml">
+
+    <ui:define name="titulo">Consulta de Pagamentos</ui:define>
+
+    <ui:define name="corpo">
+        <h:form>
+            <f:metadata>
+                <f:viewParam name="clienteId" value="#{consultaPagamentosBean.clienteId}" />
+                <f:viewAction action="#{consultaPagamentosBean.init()}" />
+            </f:metadata>
+
+            <p:growl showDetail="true"/>
+
+            <p:toolbar>
+                <p:toolbarGroup>
+                    <p:button icon="pi pi-arrow-left" value="Voltar" onclick="history.back()" />
+                </p:toolbarGroup>
+            </p:toolbar>
+
+            <p:dataTable var="pagamento" value="#{consultaPagamentosBean.pagamentos}" 
+                        reflow="true" paginator="true" rows="10" 
+                        paginatorPosition="bottom"
+                        rowsPerPageTemplate="5,10,{ShowAll|'All'}" >
+                
+                <p:column headerText="Data do Pagamento">
+                    <h:outputText value="#{pagamento.dataPagamento}">
+                        <f:convertDateTime pattern="dd/MM/yyyy" />
+                    </h:outputText>
+                </p:column>
+                
+                <p:column headerText="Valor">
+                    <h:outputText value="#{pagamento.valor}">
+                        <f:convertNumber type="currency" currencySymbol="R$" locale="pt_BR" />
+                    </h:outputText>
+                </p:column>
+                
+                <p:column headerText="Forma de Pagamento">
+                    <h:outputText value="#{pagamento.formaPagamento}" />
+                </p:column>
+
+            </p:dataTable>
+            
+        </h:form>
+    </ui:define>
+</ui:composition>
+
+</html>

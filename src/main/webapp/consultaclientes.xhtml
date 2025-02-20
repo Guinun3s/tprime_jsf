@@ -60,6 +60,9 @@ and open the template in the editor.
                     <p:button title="Ver Compras" icon="pi pi-shopping-cart" outcome="consultacompras">
                         <f:param name="clienteId" value="#{cliente.id}" />
                     </p:button>
+                    <p:button title="Ver Pagamentos" icon="pi pi-money-bill" outcome="consultapagamentos">
+                        <f:param name="clienteId" value="#{cliente.id}" />
+                    </p:button>
                     <p:commandButton title="Excluir" icon="pi pi-trash"
                         process="@this" oncomplete="PF('deleteDialog').show()">
                         <f:setPropertyActionListener value="#{cliente}"
