@@ -2,57 +2,68 @@ package com.example.tprime.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.example.tprime.model.Cliente;
 import com.example.tprime.model.Compra;
 import com.example.tprime.model.Pagamento;
-import com.example.tprime.repository.IClienteRepository;
 import com.example.tprime.repository.ICompraRepository;
 import com.example.tprime.repository.IPagamentoRepository;
 
-import javax.transaction.Transactional;
-
-import java.util.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 @Transactional
 @Service
 public class PagamentoService {
-    @Autowired
-    private IClienteRepository clienteRepository;
 
     @Autowired
-    private IPagamentoRepository repository;
+    private IPagamentoRepository pagamentoRepository;
 
-    //Método utilizado para o cliente realizar o pagamento da compra realizada ou pagar sua dívida 
-    public void pagarDivida(Long clienteId, Double valorPagamento) {
-        Cliente cliente = clienteRepository.findById(clienteId).orElseThrow(() -> new RuntimeException("Cliente não encontrado"));
+    @Autowired
+    private ICompraRepository compraRepository;
 
-        if (valorPagamento > 0 && valorPagamento <= cliente.getDivida()) {
-            cliente.setDivida(cliente.getDivida() - valorPagamento);
-            clienteRepository.save(cliente);
+    @Autowired
+    private ClienteService clienteService;
+
+    public void pagarDivida(Pagamento pagamento) {
+        Cliente cliente = clienteService.buscarPorId(pagamento.getCliente().getId());
+        Compra compra = compraRepository.findById(pagamento.getCompra().getId()).orElseThrow(() -> new RuntimeException("Compra não encontrada"));
+
+        if (cliente != null && compra != null && pagamento.getValor() != null && pagamento.getValor() > 0 && pagamento.getValor() <= compra.getValor()) {
+            pagamento.setCliente(cliente);
+            pagamento.setCompra(compra);
+            pagamento.setDataPagamento(new Date());
+
+            pagamentoRepository.save(pagamento);
+
+            // Atualizar a dívida do cliente
+            cliente.setDivida(cliente.getDivida() - pagamento.getValor());
+            clienteService.salvar(cliente);
         } else {
-            throw new IllegalArgumentException("Valor de pagamento inválido");
+            throw new IllegalArgumentException("Dados de pagamento inválidos");
         }
     }
 
     public void salvar(Pagamento pagamento) {
-        repository.save(pagamento);
+        pagamentoRepository.save(pagamento);
     }
 
     public void editar(Pagamento pagamento) {
-        repository.save(pagamento);
+        pagamentoRepository.save(pagamento);
     }
 
     public void excluir(Long id) {
-        repository.deleteById(id);
+        pagamentoRepository.deleteById(id);
     }
 
     public Optional<Pagamento> buscarPorId(Long id) {
-        return repository.findById(id);
+        return pagamentoRepository.findById(id);
     }
 
     public List<Pagamento> buscarTodos() {
-        return repository.findAll();
+        return pagamentoRepository.findAll();
     }
 
 }

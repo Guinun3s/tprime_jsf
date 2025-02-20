@@ -1,6 +1,6 @@
 package com.example.tprime.model;
 
-import java.time.LocalDate;
+import java.util.Date;
 
 import javax.persistence.*;
 import lombok.*;
@@ -15,17 +15,22 @@ public class Pagamento extends AbstractEntity<Long> {
     private Long id;
 
     @Column(nullable = false)
-    private LocalDate dataPagamento;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dataPagamento;
     
     @Column(nullable = false)
     private String formaPagamento;
 
     @Column(nullable = false)
-    private float valor;
+    private Double valor;
 
     //Relacionamento
-    @OneToOne
-    @JoinColumn(name = "id_pagamento_fk")
+    @ManyToOne
+    @JoinColumn(name = "cliente_id")
+    private Cliente cliente;
+
+    @ManyToOne
+    @JoinColumn(name = "compra_id")
     private Compra compra;
     
     //toString para exibir as informações do pagamento

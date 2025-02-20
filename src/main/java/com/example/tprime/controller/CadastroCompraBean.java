@@ -52,8 +52,6 @@ public class CadastroCompraBean {
         Cliente cliente = clienteService.buscarPorId(clienteId);
         compra.setCliente(cliente);
         compraService.salvar(compra);
-        //Prepara para cadastrar um novo lancamento
-        //compra = new Compra();
 
         FacesMessage mensagem = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cadastro efetuado.",
                 "Compra cadastrado com sucesso.");

@@ -3,7 +3,6 @@ package com.example.tprime.controller;
 import javax.annotation.PostConstruct;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -12,6 +11,8 @@ import org.springframework.stereotype.Component;
 import java.io.Serializable;
 
 import com.example.tprime.model.Cliente;
+import com.example.tprime.model.Compra;
+import com.example.tprime.model.Pagamento;
 import com.example.tprime.service.ClienteService;
 import com.example.tprime.service.PagamentoService;
 
@@ -35,20 +36,26 @@ public class PagamentoDividaBean implements Serializable {
     private Long clienteId;
 
     @Getter @Setter
+    private Long compraId;
+
+    @Getter @Setter
     private Double valorTotalDivida;
 
     @Getter @Setter
-    private Double valorPagamento;
+    private Pagamento pagamento;
 
     @PostConstruct
     public void init() {
-        // Inicialização
+        pagamento = new Pagamento();
     }
 
     public void prepararPagamento() {
         if (clienteId != null) {
             cliente = clienteService.buscarPorId(clienteId);
             calcularValorTotalDivida();
+            pagamento.setCliente(cliente);
+            pagamento.setCompra(new Compra());
+            pagamento.getCompra().setId(compraId);
         }
     }
 
@@ -57,10 +64,14 @@ public class PagamentoDividaBean implements Serializable {
     }
 
     public void pagar() {
-        if (valorPagamento != null && valorPagamento > 0 && valorPagamento <= valorTotalDivida) {
-            pagamentoService.pagarDivida(clienteId, valorPagamento);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Pagamento realizado com sucesso!"));
-            prepararPagamento(); // Recalcular a dívida restante
+        if (pagamento.getValor() != null && pagamento.getValor() > 0 && pagamento.getValor() <= valorTotalDivida) {
+            try {
+                pagamentoService.pagarDivida(pagamento);
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Pagamento realizado com sucesso!"));
+                prepararPagamento(); // Recalcular a dívida restante
+            } catch (IllegalArgumentException e) {
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", e.getMessage()));
+            }
         } else {
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Erro", "Valor de pagamento inválido"));
         }

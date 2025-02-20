@@ -22,12 +22,6 @@
                         <f:param name="clienteId" value="#{consultaComprasBean.clienteId}" />
                     </p:button>
                 </p:toolbarGroup>
-                <p:toolbarGroup>
-                    <p:button icon="pi pi-plus" value="Pagar dívida" 
-                        outcome="pagamentodivida">
-                        <f:param name="clienteId" value="#{consultaComprasBean.clienteId}" />
-                    </p:button>
-                </p:toolbarGroup>
             </p:toolbar>
 
             <p:dataTable var="compra" value="#{consultaComprasBean.compras}" 
@@ -56,6 +50,10 @@
                     <p:button title="Alterar" icon="pi pi-pencil" outcome="cadastrocompra">
                         <f:param name="id" value="#{compra.id}" />
                         <f:param name="clienteId" value="#{consultaComprasBean.clienteId}" />
+                    </p:button>
+                    <p:button title="Pagar Dívida" icon="pi pi-money-bill" outcome="pagamentodivida">
+                        <f:param name="clienteId" value="#{consultaComprasBean.clienteId}" />
+                        <f:param name="compraId" value="#{compra.id}" />
                     </p:button>
                 </p:column>
 

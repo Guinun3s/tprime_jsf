@@ -27,11 +27,6 @@ public class CadastroClienteBean {
         cliente = new Cliente();
     }
 
-    /*public void consultar() {
-        todosClientes = clienteService.buscarTodos();
-        //System.out.println("entrou no post cronstructor");
-    }*/
-
     public void salvar() {
         FacesContext context = FacesContext.getCurrentInstance();
         clienteService.salvar(cliente);

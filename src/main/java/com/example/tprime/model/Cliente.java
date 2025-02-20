@@ -42,6 +42,9 @@ public class Cliente extends AbstractEntity<Long> {
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
     private List<Compra> compras = new ArrayList<>();
 
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
+    private List<Pagamento> pagamentos = new ArrayList<>();
+
     //toString para exibir as informações do cliente
     @Override
     public String toString() {

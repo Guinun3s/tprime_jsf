@@ -34,8 +34,8 @@ public class Compra extends AbstractEntity<Long> {
     )
     private List<Produto> produtos;
 
-    @OneToOne(mappedBy = "compra", cascade = CascadeType.ALL)
-    private Pagamento pagamento;
+    @OneToMany(mappedBy = "compra", cascade = CascadeType.ALL)
+    private List<Pagamento> pagamentos;
 
     //toString para exibir as informações da compra
     @Override

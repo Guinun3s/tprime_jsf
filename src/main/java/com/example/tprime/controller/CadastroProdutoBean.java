@@ -27,11 +27,6 @@ public class CadastroProdutoBean {
         produto = new Produto();
     }
 
-    /*public void consultar() {
-        todosProdutos = produtoService.buscarTodos();
-        //System.out.println("entrou no post cronstructor");
-    }*/
-
     public void salvar() {
         FacesContext context = FacesContext.getCurrentInstance();
         produtoService.salvar(produto);
