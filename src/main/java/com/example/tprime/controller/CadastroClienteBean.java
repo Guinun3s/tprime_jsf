@@ -33,16 +33,13 @@ public class CadastroClienteBean {
         //Prepara para cadastrar um novo lancamento
         cliente = new Cliente();
 
-        FacesMessage mensagem = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cadastro efetuado.",
-                "Cliente cadastrado com sucesso.");
+        FacesMessage mensagem = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cadastro efetuado.", "Cliente cadastrado com sucesso.");
         context.addMessage(null, mensagem);
-
     }
 
     public void prepararCadastro() {
         cliente = clienteService.buscarPorId(cliente.getId());
         
     }
-
 
 }

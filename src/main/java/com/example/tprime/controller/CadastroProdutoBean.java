@@ -41,8 +41,6 @@ public class CadastroProdutoBean {
 
     public void prepararCadastro() {
         produto = produtoService.buscarPorId(produto.getId());
-        
     }
-
 
 }

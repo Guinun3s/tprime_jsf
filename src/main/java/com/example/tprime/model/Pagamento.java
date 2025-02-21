@@ -5,14 +5,12 @@ import java.util.Date;
 import javax.persistence.*;
 import lombok.*;
 
-@Data
-@EqualsAndHashCode(callSuper=false)
+@Getter
+@Setter
 @Entity
 @Table(name = "PAGAMENTO")
 public class Pagamento extends AbstractEntity<Long> {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+ 
 
     @Column(nullable = false)
     @Temporal(TemporalType.TIMESTAMP)
@@ -33,9 +31,5 @@ public class Pagamento extends AbstractEntity<Long> {
     @JoinColumn(name = "compra_id")
     private Compra compra;
     
-    //toString para exibir as informações do pagamento
-    @Override
-    public String toString() {
-        return "\nPagamento id= " + id + "\ndataPagamento= " + dataPagamento + "\nformaPagamento= " + formaPagamento + "\nvalor= " + valor + "\n";
-    }
+   
 }

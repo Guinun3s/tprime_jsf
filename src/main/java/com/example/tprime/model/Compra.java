@@ -1,25 +1,23 @@
 package com.example.tprime.model;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import javax.persistence.*;
 import lombok.*;
 
-@Data
-@EqualsAndHashCode(callSuper=false)
+@Getter
+@Setter
 @Entity
 @Table(name = "COMPRA")
 public class Compra extends AbstractEntity<Long> {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+   
     
     @Column(nullable = false)
     private Double valor;
 
     @Column(nullable = false)
-    private LocalDate dataCompra;
+    private LocalDateTime dataCompra;
 
     //Relacionamentos
     @ManyToOne
@@ -36,11 +34,5 @@ public class Compra extends AbstractEntity<Long> {
 
     @OneToMany(mappedBy = "compra", cascade = CascadeType.ALL)
     private List<Pagamento> pagamentos;
-
-    //toString para exibir as informações da compra
-    @Override
-    public String toString() {
-        return "\nCompra id= " + id + "\nvalor= " + valor + "\ndataCompra= " + dataCompra + "\n";
-    }
 
 }

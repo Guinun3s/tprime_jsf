@@ -7,15 +7,11 @@ import java.util.List;
 import javax.persistence.*;
 import lombok.*;
 
-@Data
-@EqualsAndHashCode(callSuper=false)
+@Getter
+@Setter
 @Entity
 @Table(name = "CLIENTE")
 public class Cliente extends AbstractEntity<Long> {
-    
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
     
     @Column(nullable = false)
     private String nome;
@@ -45,12 +41,7 @@ public class Cliente extends AbstractEntity<Long> {
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL)
     private List<Pagamento> pagamentos = new ArrayList<>();
 
-    //toString para exibir as informações do cliente
-    @Override
-    public String toString() {
-        return "\nCliente id= " + id + "\nnome= " + nome + "\ncpf= " + cpf + "\ndataNas= " + dataNascimento + "\nemail= " + email
-                + "\ntelefone= " + telefone + "\nendereco= " + endereco + "\ndivida= " + divida + "\n";
-    }
+   
     
 }
 

@@ -21,8 +21,9 @@ import lombok.Setter;
 @Component
 @Scope("view")
 public class CadastroCompraBean {
-    @Getter@Setter
+    @Getter @Setter
     private Compra compra = new Compra();
+
     @Autowired
     private CompraService compraService;
 
@@ -32,7 +33,7 @@ public class CadastroCompraBean {
     @Autowired
     private ProdutoService produtoService;
 
-    @Getter@Setter
+    @Getter @Setter
     private Long clienteId;
 
     @Getter
@@ -54,9 +55,8 @@ public class CadastroCompraBean {
         compraService.salvar(compra);
 
         FacesMessage mensagem = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cadastro efetuado.",
-                "Compra cadastrado com sucesso.");
+                "Compra cadastrada com sucesso.");
         context.addMessage(null, mensagem);
-
     }
 
     public void prepararCadastro() {
